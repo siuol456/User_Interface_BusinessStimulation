@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{ author.full_name }}</h1>
+
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Articles</h4>
+    {% for copy in author.article_set.all %}
+    <hr> <a href="{{ copy.get_absolute_url }}"><strong>{{copy.title}}</strong> </hr>
+    {% if copy.subtitle %}
+    <p> {{ copy.subtitle }}</p>
+    {% endif %}
+    <p>{{copy.date_of_publish}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
+

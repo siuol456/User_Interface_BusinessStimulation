@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{ article.title }}</h1>
+{% if article.subtitle %}
+<h2> {{ article.subtitle }}</h2>
+{% endif %}
+<h3> {{ article.date_of_publish }}</h3>
+<p><strong>Author:</strong> <a href="{% url 'author-detail' article.author.pk %}">{{ article.author }}</a></p> <!-- author detail link not yet defined -->
+<p><strong>Source:</strong> {{ article.source }}</p>
+<p><strong>Topic:</strong>  <a href="{% url 'topic-detail' article.topic.pk %}">{{ article.topic }}</a></p>
+<p><strong>Link:</strong> <a href="{{ article.url}}">{{ article.url}}</a></p>
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Content</h4>
+    {% for copy in article.article_content_set.all %}
+    <hr> <strong>Attitude toward the product:</strong> {{copy.attitude}} </hr>
+    <p>{{copy.content}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
+

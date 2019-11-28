@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Analysis Reports</h1>
+
+<h2>Co-Mentioned Terms</h2>
+<hr>By learning the {{ num_articles }} articles collected, we find several words are repetitive mentioned. The Wordcloud figure above gives some clues. Words in bigger size are mentioned more than the other words. Then, moving forward to the bar plot below, We find the top three co-mentioned terms are {{ T1 }},{{ T2 }},{{ T3 }}. Especially, {{ T1 }} was mentioned {{ T4 }} times, {{ T2 }} was mentioned {{ T5 }} times and {{ T3 }} was mentioned {{ T6 }} times.
+
+<img src='report_fig1'alt="">
+{% endblock %}
