@@ -69,8 +69,6 @@ class Article(models.Model):
     
     display_topic.short_description = 'Topic'
     display_source.short_description = 'Source'
-
-
 class Article_content(models.Model):
     id=models.ForeignKey('Article', primary_key=True,on_delete=models.CASCADE,unique = True )
     content = models.TextField(help_text='Enter the full content for the article.')
@@ -115,6 +113,14 @@ class Article_content(models.Model):
         punc.append("\"")
         punc.append("re")
         punc.append("will")
+        punc.append("airpod")
+        punc.append("apple")
+        punc.append("people")
+        punc.append("products")
+        punc.append("product")
+        punc.append("years")
+        punc.append("companies")
+        punc.append("company")
         new_token2=list()
         for t in new_token:
              if t not in punc:

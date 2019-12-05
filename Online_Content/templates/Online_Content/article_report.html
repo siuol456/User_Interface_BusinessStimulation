@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+ <h1> {{article.title}}</h1>  
+{% if article.subtitle %}
+<h2> {{ article.subtitle }}</h2>
+{% endif %}
+<h3>{{article.author}}</h3>
+<h3>{{article.date_of_publish}}</h3>
+<div>
+    <h3>Co-mentioned Terms</h3>
+    <p>
+        This article was published almost {{T1}} months {{T2}} 2nd generation released.
+    </p>
+    <p>
+        Even though there are {{T3}} words in this article, this author mentioned {{T4}}, {{T5}} and {{T6}} for {{T7}} times. Apart from these three words, there are also several words mentioned more than once. Below is the barplot indicating the top 10 co-mentioned terms and its frequency.
+    </p>
+    {{fig2|safe}}
+</div>
+
+{% endblock %}

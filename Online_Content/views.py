@@ -11,6 +11,14 @@ import seaborn as sns
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from django_pandas.io import read_frame
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+import mpld3
+import nltk, urllib, request, string, re
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+import pandas as pd
+from bs4 import BeautifulSoup
+from datetime import datetime
 
 # Create your views here.
 from .models import Source, Author, Article, Topic,Article_content
@@ -165,11 +173,84 @@ class TopicListView(generic.ListView):
     paginate_by = 10
 class TopicDetailView(generic.DetailView):
     model = Topic
-#Still working on it
-#def competiter(request):
-    #if 'pk' in request.get and request.get['pk'] != '':
-        #Id=int(request.get['pk'])
-       # content = Article_content.objects.get(id=Id)
-        #r=Article_content.competiter_fig(content)
-        #return r
+
+
+
+def competiter(request,pk):
+    content=get_object_or_404(Article_content, pk = pk)
+    article=get_object_or_404(Article, pk = pk)
+    
+    target=content.content
+    Competitor =('samsung','galaxy','sony','huawei','powerbeats','google','pixel','jbl','powerhbq')
+    Competitor=list(Competitor)
+    def countW(s,n,W):
+           raw = BeautifulSoup(s, 'html.parser').get_text()
+           raw=raw.lower()
+           raw=re.sub(r'\d+', '', raw)
+           tokens = word_tokenize(raw)
+           sw = stopwords.words('English')
+           new_token=list()
+           for t in tokens:
+               if t not in sw:
+                   new_token.append(t)
+           punc=list(string.punctuation)
+           manualcheck= ['“','”','’',"n't","'m","th","'d","'s","eant",'priyanka',
+                  'bangalore','std','hi','zoe','``',"''",'—',"'re","'ll","'ve",'eh','\x80','airpods','airpod','apple','also'
+                 ,'said','want','like','make','even','get','siri','products','product']
+           punc.extend(manualcheck)
+           new_token2=list()
+           for t in new_token:
+               if t not in punc:
+                  new_token2.append(t)
+           freq= nltk.FreqDist(new_token2)
+           tryo = pd.DataFrame(list(dict(freq).items()))
+           tryo=tryo.sort_values(by=1, ascending=False)
+           tryo.columns = ['Words', 'freq']
+           if W in list(tryo.Words):
+               result= int(tryo[tryo.Words==W].freq)
+               return(result)
+           else:
+               return(0) 
+    MT=list()
+    for comp in Competitor:
+        t2=countW(target,len(target),comp)
+        MT.append(t2)
+    if any(MT):
+        result=pd.DataFrame({'comp': Competitor,'MT': MT})
+        ind=np.arange(len(Competitor)) 
+        fig,ax=plt.subplots()
+        plt.bar(result['comp'], result['MT'])
+        plt.xticks(ind,Competitor) 
+        fig_html=mpld3.fig_to_html(fig)
+    else:
+        fig_html="There are no competitors in this article"
+
+    #cometioned term
+    def countWords(A):
+       dic={}
+       for x in A:
+          if not x in  dic:        
+             dic[x] = A.count(x)
+       return dic
+
+    dic = countWords(Article_content.key_word(content))
+    sorted_items=sorted(dic.items(),key=lambda x: x[1],reverse=True)  
+    sorted_items = pd.DataFrame.from_dict(sorted_items)
+    sorted_items.columns = {'Terms','Frequency'}
+    datetime_object1 = article.date_of_publish
+    release_date = '2019-03-20'
+    datetime_object2 = datetime.strptime(release_date, '%Y-%m-%d')
+    month_diff = datetime_object1.month-datetime_object2.month
+    if month_diff >0:
+        term='after'
+    else:
+        term='before'
+    month_diff = abs(month_diff)
+    datetime_object1=datetime_object1.strftime("%b %d %Y ")
+    T3=len(str(content.content).split(" "))
+    fig2,ax=plt.subplots()
+    sns.barplot(x="Terms", y="Frequency", data=sorted_items[0:9], palette="muted")
+    plt.title("Top 10 Co-mentioned Terms",pad = 15,fontsize = 20)
+    fig2_html=mpld3.fig_to_html(fig2)
+    return render(request, 'Online_Content/article_report.html', {'fig': fig_html,'fig2': fig2_html, 'content':content,'article':article, 'T1':month_diff, 'T2':term,'T3':T3,'T4':sorted_items.Terms[0],'T5':sorted_items.Terms[1],'T6':sorted_items.Terms[2],'T7':sum(sorted_items.Frequency[:3])})
    

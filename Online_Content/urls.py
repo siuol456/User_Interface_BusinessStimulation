@@ -13,5 +13,8 @@ urlpatterns = [
     path('authors/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
     path('topic/', views.TopicListView.as_view(), name='topic'),
     path('topic/<int:pk>', views.TopicDetailView.as_view(), name='topic-detail'),
-    
+   
      ]
+urlpatterns += [
+    path('book/<int:pk>/report/', views.competiter, name='competiter'),
+]
