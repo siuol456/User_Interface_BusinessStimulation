@@ -74,9 +74,9 @@ class Article_content(models.Model):
     content = models.TextField(help_text='Enter the full content for the article.')
     def get_getattitude(self):
         score=analyser.polarity_scores(self.content)['compound']
-        if score > 0.3:
+        if score > 0.5:
             result = 'Positive'
-        elif score < -0.3:
+        elif score < -0.5:
             result = 'Negative'
         else:
             result = 'Neutral'
@@ -114,6 +114,7 @@ class Article_content(models.Model):
         punc.append("re")
         punc.append("will")
         punc.append("airpod")
+        punc.append("airpods")
         punc.append("apple")
         punc.append("people")
         punc.append("products")

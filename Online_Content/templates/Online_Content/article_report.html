@@ -17,5 +17,14 @@
     </p>
     {{fig2|safe}}
 </div>
+<div>
+    <h3>Metioned Competitors</h3>
+    {% if fig %}
+    <p>As shown in the graph, this article has metioned these competitors. In total, these terms are presented {{T8}} times.</p>
+    {{ fig|safe }}
+    {% else %}
+    <p>There are no competitors or their products mentioned.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

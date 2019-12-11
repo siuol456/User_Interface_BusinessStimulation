@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Source List</h1>
+  {% if source_list %}
+<ul>
+    {% for source in source_list %}
+    <li>
+        <a href="{{ source.get_absolute_url }}">{{ source.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+  {% else %}
+<p>There are no source in the database.</p>
+  {% endif %}
+{% endblock %}

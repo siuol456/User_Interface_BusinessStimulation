@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>{{ author.full_name }}</h1>
+    <h1><a href="{% url 'Author_R' author.id %}">{{ author.full_name }}</a></h1>
 
 <div style="margin-left:20px;margin-top:20px">
     <h4>Articles</h4>

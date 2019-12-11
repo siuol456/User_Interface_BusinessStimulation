@@ -6,7 +6,7 @@
 <ul>
     {% for author in author_list %}
     <li>
-        <a href="{{ author.get_absolute_url }}">{{ author.full_name }}</a> 
+        <a href="{{author.get_absolute_url}}">{{ author.full_name }}</a> 
     </li>
     {% endfor %}
 </ul>

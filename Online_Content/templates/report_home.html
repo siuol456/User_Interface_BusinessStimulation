@@ -3,8 +3,26 @@
 {% block content %}
 <h1>Analysis Reports</h1>
 
-<h2>Co-Mentioned Terms</h2>
-<hr>By learning the {{ num_articles }} articles collected, we find several words are repetitive mentioned. The Wordcloud figure above gives some clues. Words in bigger size are mentioned more than the other words. Then, moving forward to the bar plot below, We find the top three co-mentioned terms are {{ T1 }},{{ T2 }},{{ T3 }}. Especially, {{ T1 }} was mentioned {{ T4 }} times, {{ T2 }} was mentioned {{ T5 }} times and {{ T3 }} was mentioned {{ T6 }} times.
+<hr>Co-Mentioned Terms</hr>
+<p>By learning the {{ num_articles }} articles collected, we find several words are repetitive mentioned. The Wordcloud figure above gives some clues. Words in bigger size are mentioned more than the other words. Then, moving forward to the bar plot below, We find the top three co-mentioned terms are {{ T1 }},{{ T2 }},{{ T3 }}. Especially, {{ T1 }} was mentioned {{ T4 }} times, {{ T2 }} was mentioned {{ T5 }} times and {{ T3 }} was mentioned {{ T6 }} times.</p>
+<img src='report_fig1' alt="" style="width:800px;height:600px;">
 
-<img src='report_fig1'alt="">
-{% endblock %}
+<hr>Competitors</hr>
+<p>After looking the terms co-mentioned, competitors are also being investigated. We have included the following names and products:</p>
+{% for comp in c %}
+<li>
+    {{ comp }}
+</li>
+{% endfor%}
+<img src='competitors_fig' alt="" style="width:800px;height:600px;">
+
+<hr>Sentiment through Time</hr>
+<p>
+    By the time-series graph with sentiment report, we can observe most of the articles are POSITIVE.
+    The new Airpod has been released on Oct. 30.
+    Before Airpod is released, it did not appeal so much in the public. After Airpod is released, the media & public paid attention
+</p>
+    <img src='detail_freq' alt="" style="width:800px;height:600px;">
+
+
+    {% endblock %}

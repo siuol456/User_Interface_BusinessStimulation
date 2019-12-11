@@ -1,11 +1,11 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>{{ topic.name }}</h1>
+<h1>{{ source.name }}</h1>
 
 <div style="margin-left:20px;margin-top:20px">
     <h4>Articles</h4>
-    {% for copy in topic.article_set.all %}
+    {% for copy in source.article_set.all %}
     <hr> <a href="{{ copy.get_absolute_url }}">
         <strong>{{copy.title}}</strong> </hr>
         {% if copy.subtitle %}

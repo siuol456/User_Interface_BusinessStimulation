@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1> {{author.full_name}}</h1>
+
+{{fig|safe}}
+
+<p>This author has written {{ t1 }} article(s) including {{t2}} positive article(s) and {{t3}} negative article(s) regarding our company.</p>
+<p> This author mainly publishes his article in following sources:</p>
+{% for source in t4 %}
+<li>
+   {{ source }}</a>
+</li>
+{% endfor %}
+<p> Null mainly focuses on the topics below:</p>
+{% for topic in t5 %}
+<li>
+   {{ topic }}</a>
+</li>
+{% endfor %}
+ 
+
+
+{% endblock %}
